@@ -63,10 +63,17 @@ export default function PlanosPage() {
         </div>
 
         <article className="remote-plan">
-          <div><p className="eyebrow dark"><span /> Treine com orientação</p><h2>Plano de treino mensal</h2><p>Para quem treina por conta própria, mas quer um planejamento individual organizado no aplicativo.</p></div>
-          <div className="remote-price"><span>a partir de</span><strong><small>R$</small>100<sup>,00</sup></strong><p>por mês</p></div>
-          <ul><li><CheckIcon /> Planejamento personalizado</li><li><CheckIcon /> Acesso ao aplicativo</li><li><CheckIcon /> Atualização mensal</li></ul>
-          <a className="button button-dark" href={whatsappLink("Olá, Deivid! Vi o plano de treino mensal no site e quero saber mais.")} target="_blank" rel="noreferrer">Solicitar plano <ArrowIcon /></a>
+          <div><p className="eyebrow dark"><span /> Atendimento online com direção</p><h2>Consultoria de treino — mensal</h2><p>Para quem precisa de direcionamento técnico, organização e acompanhamento mesmo treinando por conta própria.</p></div>
+          <div className="remote-price"><span>Plano mensal</span><strong><small>R$</small>100<sup>,00</sup></strong><p>por mês</p></div>
+          <ul><li><CheckIcon /> Treino personalizado com acesso ao aplicativo</li><li><CheckIcon /> Acompanhamento remoto da evolução</li><li><CheckIcon /> Suporte para ajustes e execução</li></ul>
+          <a className="button button-dark" href={whatsappLink("Olá, Deivid! Vi o plano mensal de consultoria de treino no site e quero saber mais.")} target="_blank" rel="noreferrer">Solicitar plano mensal <ArrowIcon /></a>
+        </article>
+
+        <article className="remote-plan">
+          <div><p className="eyebrow dark"><span /> Melhor período para consolidar a rotina</p><h2>Consultoria de treino — trimestral</h2><p>Três meses de planejamento e acompanhamento remoto para evoluir com mais consistência.</p></div>
+          <div className="remote-price"><span>Plano trimestral</span><strong><small>R$</small>250<sup>,00</sup></strong><p>por 3 meses</p></div>
+          <ul><li><CheckIcon /> Treino personalizado com acesso ao aplicativo</li><li><CheckIcon /> Acompanhamento remoto da evolução</li><li><CheckIcon /> Suporte para ajustes e execução</li></ul>
+          <a className="button button-dark" href={whatsappLink("Olá, Deivid! Vi o plano trimestral de consultoria de treino por R$ 250 no site e quero saber mais.")} target="_blank" rel="noreferrer">Solicitar plano trimestral <ArrowIcon /></a>
         </article>
 
         <div className="pricing-notes">
