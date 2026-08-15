@@ -71,9 +71,9 @@ export default function PlanosPage() {
 
         <article className="remote-plan">
           <div><p className="eyebrow dark"><span /> Melhor período para consolidar a rotina</p><h2>Consultoria de treino — trimestral</h2><p>Três meses de planejamento e acompanhamento remoto para evoluir com mais consistência.</p></div>
-          <div className="remote-price"><span>Plano trimestral</span><strong><small>R$</small>80<sup>,00</sup></strong><p>por 3 meses</p></div>
+          <div className="remote-price"><span>Plano trimestral</span><strong><small>R$</small>189<sup>,90</sup></strong><p>por 3 meses</p></div>
           <ul><li><CheckIcon /> Treino personalizado com acesso ao aplicativo</li><li><CheckIcon /> Acompanhamento remoto da evolução</li><li><CheckIcon /> Suporte para ajustes e execução</li></ul>
-          <a className="button button-dark" href={whatsappLink("Olá, Deivid! Vi o plano trimestral de consultoria de treino por R$ 80 no site e quero saber mais.")} target="_blank" rel="noreferrer">Solicitar plano trimestral <ArrowIcon /></a>
+          <a className="button button-dark" href={whatsappLink("Olá, Deivid! Vi o plano trimestral de consultoria de treino por R$ 189,90 no site e quero saber mais.")} target="_blank" rel="noreferrer">Solicitar plano trimestral <ArrowIcon /></a>
         </article>
 
         <div className="pricing-notes">
