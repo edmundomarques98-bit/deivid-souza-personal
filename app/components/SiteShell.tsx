@@ -1,10 +1,132 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import type { ReactNode } from "react";
+import Script from "next/script";
+import { useEffect, useRef, type ReactNode } from "react";
 import { ArrowIcon } from "./Icons";
-import { SiteLoadingIntro } from "./SiteLoadingIntro";
 import { assetPath } from "../lib/assets";
 import { whatsappLink } from "../lib/contact";
+
+type AnimeGlobal = {
+  animate: (target: Element, parameters: Record<string, unknown>) => unknown;
+  steps: (count: number, fromStart?: boolean) => unknown;
+};
+
+const ANIMEJS_URL =
+  "https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js";
+const INTRO_SESSION_KEY = "deivid-souza-intro-seen";
+
+function getAnime() {
+  return (window as unknown as { anime?: AnimeGlobal }).anime;
+}
+
+function replayHeaderLogo() {
+  const logo = document.querySelector<HTMLElement>(".brand-logo-header");
+  if (!logo) return;
+  logo.classList.remove("shadow-drop-2-left");
+  void logo.offsetWidth;
+  logo.classList.add("shadow-drop-2-left");
+}
+
+function SiteLoadingIntro() {
+  const introRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const intro = introRef.current;
+    const name = intro?.querySelector<HTMLElement>(".site-loading-name");
+    if (!intro || !name) return;
+
+    let hasSeenIntro = false;
+    try {
+      hasSeenIntro = window.sessionStorage.getItem(INTRO_SESSION_KEY) === "true";
+    } catch {
+      hasSeenIntro = false;
+    }
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (hasSeenIntro || reduceMotion) {
+      intro.remove();
+      return;
+    }
+
+    try {
+      window.sessionStorage.setItem(INTRO_SESSION_KEY, "true");
+    } catch {
+      // A animação continua se o armazenamento estiver bloqueado.
+    }
+
+    document.documentElement.classList.add("site-loading");
+    let animationFrame = 0;
+    let removalTimer = 0;
+    let attempts = 0;
+    let finished = false;
+
+    const finishIntro = () => {
+      if (finished) return;
+      finished = true;
+      intro.classList.add("is-finished");
+      document.documentElement.classList.remove("site-loading");
+
+      removalTimer = window.setTimeout(() => {
+        intro.remove();
+        replayHeaderLogo();
+      }, 320);
+    };
+
+    const waitForAnime = () => {
+      const anime = getAnime();
+      if (!anime?.animate || !anime.steps) {
+        attempts += 1;
+        if (attempts < 240) {
+          animationFrame = window.requestAnimationFrame(waitForAnime);
+        } else {
+          finishIntro();
+        }
+        return;
+      }
+
+      anime.animate(name, {
+        y: "100cqh",
+        duration: 1000,
+        delay: 450,
+        ease: anime.steps(5, true),
+        onComplete: finishIntro,
+      });
+    };
+
+    animationFrame = window.requestAnimationFrame(waitForAnime);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.clearTimeout(removalTimer);
+      document.documentElement.classList.remove("site-loading");
+    };
+  }, []);
+
+  return (
+    <>
+      <div
+        className="site-loading-intro"
+        ref={introRef}
+        role="status"
+        aria-label="Carregando o site de Deivid Souza"
+      >
+        <div className="site-loading-inner">
+          <span className="site-loading-kicker">Performance · Saúde · Evolução</span>
+          <div className="site-loading-name" aria-hidden="true">
+            <span>Deivid</span><strong>Souza</strong>
+          </div>
+          <span className="site-loading-line" aria-hidden="true" />
+        </div>
+      </div>
+      <Script id="animejs-global" src={ANIMEJS_URL} strategy="afterInteractive" />
+    </>
+  );
+}
 
 type NavKey = "inicio" | "acompanhamento" | "resultados" | "planos" | "contato";
 
