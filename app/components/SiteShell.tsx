@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowIcon } from "./Icons";
+import { SiteLoadingIntro } from "./SiteLoadingIntro";
 import { assetPath } from "../lib/assets";
 import { whatsappLink } from "../lib/contact";
 
@@ -18,6 +19,7 @@ const navItems: { key: NavKey; label: string; href: string }[] = [
 export function SiteShell({ children, active }: { children: ReactNode; active: NavKey }) {
   return (
     <>
+      <SiteLoadingIntro />
       <header className="site-header">
         <div className="container header-inner">
           <Link href="/" className="brand" aria-label="Deivid Souza — página inicial">
