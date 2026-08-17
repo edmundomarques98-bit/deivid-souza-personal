@@ -291,6 +291,44 @@ h1 em, h2 em { color: var(--green-bright); font-style: normal; }
 .footer-grid a:hover { color: var(--green-bright); }
 .footer-bottom { margin-top: 60px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.09); display: flex; justify-content: space-between; color: rgba(255,255,255,.3); font-size: 8px; text-transform: uppercase; letter-spacing: .1em; }
 
+
+/* Animação da marca no topo — efeito Animista */
+.shadow-drop-2-left {
+  -webkit-animation: shadow-drop-2-left 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+          animation: shadow-drop-2-left 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  will-change: transform, box-shadow;
+}
+
+@-webkit-keyframes shadow-drop-2-left {
+  0% {
+    -webkit-transform: translateZ(0) translateX(0);
+            transform: translateZ(0) translateX(0);
+    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translateZ(50px) translateX(12px);
+            transform: translateZ(50px) translateX(12px);
+    -webkit-box-shadow: -12px 0 20px -12px rgba(0, 0, 0, 0.35);
+            box-shadow: -12px 0 20px -12px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@keyframes shadow-drop-2-left {
+  0% {
+    -webkit-transform: translateZ(0) translateX(0);
+            transform: translateZ(0) translateX(0);
+    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translateZ(50px) translateX(12px);
+            transform: translateZ(50px) translateX(12px);
+    -webkit-box-shadow: -12px 0 20px -12px rgba(0, 0, 0, 0.35);
+            box-shadow: -12px 0 20px -12px rgba(0, 0, 0, 0.35);
+  }
+}
+
 .reveal { animation: reveal .7s ease both; }
 .delay-1 { animation-delay: .12s; }
 @keyframes reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }

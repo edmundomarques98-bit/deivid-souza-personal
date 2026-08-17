@@ -21,7 +21,7 @@ export function SiteShell({ children, active }: { children: ReactNode; active: N
       <header className="site-header">
         <div className="container header-inner">
           <Link href="/" className="brand" aria-label="Deivid Souza — página inicial">
-            <span className="brand-logo brand-logo-header">
+            <span className="brand-logo brand-logo-header shadow-drop-2-left">
               <Image src={assetPath("/brand/deivid-souza-logo.webp")} alt="Deivid Souza Personal Trainer" fill sizes="240px" priority />
             </span>
           </Link>
