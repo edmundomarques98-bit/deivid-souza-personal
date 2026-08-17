@@ -401,6 +401,55 @@ html.site-loading body { overflow: hidden; }
   }
 }
 
+/* Entrada dos textos ao aparecerem na tela */
+main { perspective: 1200px; }
+
+.focus-in-expand-fwd {
+  -webkit-animation: focus-in-expand-fwd .8s cubic-bezier(.25, .46, .45, .94) both;
+          animation: focus-in-expand-fwd .8s cubic-bezier(.25, .46, .45, .94) both;
+  -webkit-animation-delay: var(--focus-delay, 0ms);
+          animation-delay: var(--focus-delay, 0ms);
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+  will-change: transform, filter, opacity, letter-spacing;
+}
+
+@-webkit-keyframes focus-in-expand-fwd {
+  0% {
+    letter-spacing: -.5em;
+    -webkit-transform: translateZ(-800px);
+            transform: translateZ(-800px);
+    -webkit-filter: blur(12px);
+            filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    -webkit-filter: blur(0);
+            filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes focus-in-expand-fwd {
+  0% {
+    letter-spacing: -.5em;
+    -webkit-transform: translateZ(-800px);
+            transform: translateZ(-800px);
+    -webkit-filter: blur(12px);
+            filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    -webkit-filter: blur(0);
+            filter: blur(0);
+    opacity: 1;
+  }
+}
+
 .reveal { animation: reveal .7s ease both; }
 .delay-1 { animation-delay: .12s; }
 @keyframes reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
