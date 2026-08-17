@@ -149,6 +149,59 @@ const navItems: { key: NavKey; label: string; href: string }[] = [
 ];
 
 export function SiteShell({ children, active }: { children: ReactNode; active: NavKey }) {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const textTargets = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        [
+          "main h1",
+          "main h2",
+          "main h3",
+          "main .eyebrow",
+          "main p",
+          "main li",
+          "main blockquote",
+          "main .price",
+          "main .period",
+          "main .case-label",
+          "main .price-badge",
+        ].join(", "),
+      ),
+    );
+
+    if (!("IntersectionObserver" in window)) {
+      textTargets.forEach((target) =>
+        target.classList.add("focus-in-expand-fwd"),
+      );
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const target = entry.target as HTMLElement;
+          target.classList.add("focus-in-expand-fwd");
+          observer.unobserve(target);
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    textTargets.forEach((target, index) => {
+      target.style.setProperty("--focus-delay", `${(index % 4) * 70}ms`);
+      observer.observe(target);
+    });
+
+    return () => {
+      observer.disconnect();
+      textTargets.forEach((target) =>
+        target.style.removeProperty("--focus-delay"),
+      );
+    };
+  }, [active]);
+
   return (
     <>
       <SiteLoadingIntro />
