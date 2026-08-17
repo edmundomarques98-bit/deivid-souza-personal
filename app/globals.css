@@ -332,21 +332,22 @@ html.site-loading body { overflow: hidden; }
 }
 .site-loading-wordmark {
   display: block;
-  width: min(820px, 90vw);
+  width: min(920px, 92vw);
   height: auto;
   margin: 0 auto;
   overflow: visible;
   filter: drop-shadow(0 0 24px rgba(31, 194, 128, .16));
 }
-.loading-logo-reveal-line {
-  fill: none;
-  stroke: #fff;
-  stroke-width: 520;
-  stroke-linecap: butt;
+.loading-name-path {
+  fill: transparent;
+  stroke: var(--white);
+  stroke-width: 4;
+  stroke-linecap: round;
   stroke-linejoin: round;
+  paint-order: stroke fill;
 }
-.site-loading-logo-image {
-  mix-blend-mode: screen;
+.loading-name-path-souza {
+  stroke: var(--green-bright);
 }
 .site-loading-line {
   display: block;
@@ -357,7 +358,8 @@ html.site-loading body { overflow: hidden; }
 }
 @media (max-width: 620px) {
   .site-loading-intro { padding: 22px; }
-  .site-loading-wordmark { width: min(96vw, 720px); }
+  .site-loading-wordmark { width: min(96vw, 760px); }
+  .loading-name-path { stroke-width: 5; }
   .site-loading-kicker { margin-bottom: 25px; letter-spacing: .2em; }
   .site-loading-line { margin-top: 25px; }
 }
