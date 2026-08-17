@@ -2,24 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
+import { animate, stagger, svg } from "animejs";
 import { useEffect, useRef, type ReactNode } from "react";
 import { ArrowIcon } from "./Icons";
 import { assetPath } from "../lib/assets";
 import { whatsappLink } from "../lib/contact";
 
-type AnimeGlobal = {
-  animate: (target: Element, parameters: Record<string, unknown>) => unknown;
-  steps: (count: number, fromStart?: boolean) => unknown;
-};
-
-const ANIMEJS_URL =
-  "https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js";
 const INTRO_SESSION_KEY = "deivid-souza-intro-seen";
-
-function getAnime() {
-  return (window as unknown as { anime?: AnimeGlobal }).anime;
-}
 
 function replayHeaderLogo() {
   const logo = document.querySelector<HTMLElement>(".brand-logo-header");
@@ -34,8 +23,7 @@ function SiteLoadingIntro() {
 
   useEffect(() => {
     const intro = introRef.current;
-    const name = intro?.querySelector<HTMLElement>(".site-loading-name");
-    if (!intro || !name) return;
+    if (!intro) return;
 
     let hasSeenIntro = false;
     try {
@@ -60,9 +48,8 @@ function SiteLoadingIntro() {
     }
 
     document.documentElement.classList.add("site-loading");
-    let animationFrame = 0;
+    let holdTimer = 0;
     let removalTimer = 0;
-    let attempts = 0;
     let finished = false;
 
     const finishIntro = () => {
@@ -77,54 +64,62 @@ function SiteLoadingIntro() {
       }, 320);
     };
 
-    const waitForAnime = () => {
-      const anime = getAnime();
-      if (!anime?.animate || !anime.steps) {
-        attempts += 1;
-        if (attempts < 240) {
-          animationFrame = window.requestAnimationFrame(waitForAnime);
-        } else {
-          finishIntro();
-        }
-        return;
-      }
+    const drawables = svg.createDrawable(
+      ".site-loading-intro .loading-draw-line",
+    );
 
-      anime.animate(name, {
-        y: "100cqh",
-        duration: 1000,
-        delay: 450,
-        ease: anime.steps(5, true),
-        onComplete: finishIntro,
-      });
-    };
-
-    animationFrame = window.requestAnimationFrame(waitForAnime);
+    animate(drawables, {
+      draw: ["0 0", "0 1"],
+      ease: "inOutQuad",
+      duration: 1800,
+      delay: stagger(90),
+      onComplete: () => {
+        holdTimer = window.setTimeout(finishIntro, 450);
+      },
+    });
 
     return () => {
-      window.cancelAnimationFrame(animationFrame);
+      window.clearTimeout(holdTimer);
       window.clearTimeout(removalTimer);
       document.documentElement.classList.remove("site-loading");
     };
   }, []);
 
   return (
-    <>
-      <div
-        className="site-loading-intro"
-        ref={introRef}
-        role="status"
-        aria-label="Carregando o site de Deivid Souza"
-      >
-        <div className="site-loading-inner">
-          <span className="site-loading-kicker">Performance · Saúde · Evolução</span>
-          <div className="site-loading-name" aria-hidden="true">
-            <span>Deivid</span><strong>Souza</strong>
-          </div>
-          <span className="site-loading-line" aria-hidden="true" />
-        </div>
+    <div
+      className="site-loading-intro"
+      ref={introRef}
+      role="status"
+      aria-label="Carregando o site de Deivid Souza"
+    >
+      <div className="site-loading-inner">
+        <span className="site-loading-kicker">
+          Performance · Saúde · Evolução
+        </span>
+        <svg
+          className="site-loading-wordmark"
+          viewBox="0 0 880 150"
+          role="img"
+          aria-label="Deivid Souza"
+        >
+          <title>Deivid Souza</title>
+          <g fill="none">
+            <path className="loading-draw-line" d="M20 120V30H45C75 30 75 120 45 120H20" />
+            <path className="loading-draw-line" d="M150 30H95V120H150M95 74H140" />
+            <path className="loading-draw-line" d="M170 30H225M197.5 30V120M170 120H225" />
+            <path className="loading-draw-line" d="M245 30L272.5 120L300 30" />
+            <path className="loading-draw-line" d="M320 30H375M347.5 30V120M320 120H375" />
+            <path className="loading-draw-line" d="M395 120V30H420C450 30 450 120 420 120H395" />
+            <path className="loading-draw-line loading-draw-line-souza" d="M555 36C544 27 511 27 502 45C494 62 510 72 530 75C551 78 560 91 552 108C544 124 511 124 500 114" />
+            <path className="loading-draw-line loading-draw-line-souza" d="M602.5 30C570 30 570 120 602.5 120C635 120 635 30 602.5 30Z" />
+            <path className="loading-draw-line loading-draw-line-souza" d="M650 30V92C650 130 705 130 705 92V30" />
+            <path className="loading-draw-line loading-draw-line-souza" d="M725 30H780L725 120H780" />
+            <path className="loading-draw-line loading-draw-line-souza" d="M800 120L827.5 30L855 120M810 88H845" />
+          </g>
+        </svg>
+        <span className="site-loading-line" aria-hidden="true" />
       </div>
-      <Script id="animejs-global" src={ANIMEJS_URL} strategy="afterInteractive" />
-    </>
+    </div>
   );
 }
 
