@@ -292,6 +292,72 @@ h1 em, h2 em { color: var(--green-bright); font-style: normal; }
 .footer-bottom { margin-top: 60px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.09); display: flex; justify-content: space-between; color: rgba(255,255,255,.3); font-size: 8px; text-transform: uppercase; letter-spacing: .1em; }
 
 
+
+/* Abertura do site com o nome Deivid Souza */
+html.site-loading,
+html.site-loading body { overflow: hidden; }
+
+.site-loading-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 32px;
+  color: var(--white);
+  background: radial-gradient(circle at 50% 45%, rgba(31, 194, 128, .14), transparent 38%), var(--navy);
+  opacity: 1;
+  transition: opacity .32s ease;
+}
+.site-loading-intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .1;
+  background-image: linear-gradient(rgba(255,255,255,.14) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.14) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at center, black, transparent 72%);
+}
+.site-loading-intro.is-finished { opacity: 0; pointer-events: none; }
+.site-loading-inner { position: relative; z-index: 1; width: min(1040px, 100%); text-align: center; }
+.site-loading-kicker {
+  display: block;
+  margin-bottom: 20px;
+  color: var(--green-bright);
+  font-size: clamp(9px, 1.1vw, 12px);
+  font-weight: 900;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+}
+.site-loading-name {
+  display: flex;
+  justify-content: center;
+  gap: .2em;
+  margin: 0;
+  font-family: Impact, "Arial Narrow", Arial, sans-serif;
+  font-size: clamp(64px, 12vw, 176px);
+  font-weight: 500;
+  line-height: .88;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  will-change: transform;
+}
+.site-loading-name strong { color: var(--green-bright); font: inherit; }
+.site-loading-line {
+  display: block;
+  width: min(480px, 72vw);
+  height: 3px;
+  margin: 30px auto 0;
+  background: linear-gradient(90deg, transparent, var(--green-bright), transparent);
+}
+@media (max-width: 620px) {
+  .site-loading-intro { padding: 22px; }
+  .site-loading-name { flex-direction: column; gap: 0; font-size: clamp(70px, 23vw, 118px); }
+  .site-loading-kicker { margin-bottom: 25px; letter-spacing: .2em; }
+  .site-loading-line { margin-top: 25px; }
+}
+
 /* Animação da marca no topo — efeito Animista */
 .shadow-drop-2-left {
   -webkit-animation: shadow-drop-2-left 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
