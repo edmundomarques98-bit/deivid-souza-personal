@@ -1,39 +1,17 @@
 "use client";
 
-import Script from "next/script";
-import { useCallback, useEffect, useRef } from "react";
-
-type AnimeGlobal = {
-  animate: (
-    target: Element,
-    parameters: Record<string, unknown>,
-  ) => unknown;
-};
-
-declare global {
-  interface Window {
-    anime?: AnimeGlobal;
-  }
-}
-
-const ANIMEJS_URL =
-  "https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js";
+import { animate } from "animejs";
+import { useEffect, useRef } from "react";
 
 export function PlanAnimations() {
   const observerRef = useRef<IntersectionObserver | null>(null);
-  const initializedRef = useRef(false);
 
-  const initialize = useCallback(() => {
-    if (initializedRef.current || !window.anime?.animate) return;
-
-    initializedRef.current = true;
+  useEffect(() => {
     const targets = Array.from(
       document.querySelectorAll<HTMLElement>(".plan-animated"),
     );
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     observerRef.current = new IntersectionObserver(
       (entries, observer) => {
@@ -50,7 +28,7 @@ export function PlanAnimations() {
 
           target.style.willChange = "transform, opacity";
 
-          window.anime?.animate(target, {
+          animate(target, {
             y: { from: "100cqh", to: endY },
             opacity: { from: 0, to: 1 },
             duration: 1000,
@@ -67,21 +45,9 @@ export function PlanAnimations() {
     );
 
     targets.forEach((target) => observerRef.current?.observe(target));
-  }, []);
-
-  useEffect(() => {
-    if (window.anime?.animate) initialize();
 
     return () => observerRef.current?.disconnect();
-  }, [initialize]);
+  }, []);
 
-  return (
-    <Script
-      id="animejs-planos"
-      src={ANIMEJS_URL}
-      strategy="afterInteractive"
-      onLoad={initialize}
-      onReady={initialize}
-    />
-  );
+  return null;
 }
