@@ -332,20 +332,22 @@ html.site-loading body { overflow: hidden; }
 }
 .site-loading-wordmark {
   display: block;
-  width: min(920px, 92vw);
+  width: min(820px, 90vw);
   height: auto;
   margin: 0 auto;
   overflow: visible;
-  filter: drop-shadow(0 0 18px rgba(31, 194, 128, .12));
+  filter: drop-shadow(0 0 24px rgba(31, 194, 128, .16));
 }
-.loading-draw-line {
+.loading-logo-reveal-line {
   fill: none;
-  stroke: var(--white);
-  stroke-width: 5;
-  stroke-linecap: round;
+  stroke: #fff;
+  stroke-width: 520;
+  stroke-linecap: butt;
   stroke-linejoin: round;
 }
-.loading-draw-line-souza { stroke: var(--green-bright); }
+.site-loading-logo-image {
+  mix-blend-mode: screen;
+}
 .site-loading-line {
   display: block;
   width: min(480px, 72vw);
@@ -355,8 +357,7 @@ html.site-loading body { overflow: hidden; }
 }
 @media (max-width: 620px) {
   .site-loading-intro { padding: 22px; }
-  .site-loading-wordmark { width: min(96vw, 760px); }
-  .loading-draw-line { stroke-width: 6; }
+  .site-loading-wordmark { width: min(96vw, 720px); }
   .site-loading-kicker { margin-bottom: 25px; letter-spacing: .2em; }
   .site-loading-line { margin-top: 25px; }
 }
