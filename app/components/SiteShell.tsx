@@ -150,6 +150,26 @@ const navItems: { key: NavKey; label: string; href: string }[] = [
 
 export function SiteShell({ children, active }: { children: ReactNode; active: NavKey }) {
   useEffect(() => {
+    if (!("serviceWorker" in navigator)) return;
+
+    let isMounted = true;
+    navigator.serviceWorker
+      .register(assetPath("/sw.js"), {
+        scope: assetPath("/"),
+        updateViaCache: "none",
+      })
+      .then((registration) => {
+        if (!isMounted) return;
+        registration.update().catch(() => undefined);
+      })
+      .catch(() => undefined);
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const textTargets = Array.from(
