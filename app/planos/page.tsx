@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { PlanAnimations } from "./PlanAnimations";
 import { ArrowIcon, CheckIcon } from "../components/Icons";
 import { SiteShell } from "../components/SiteShell";
 import { whatsappLink } from "../lib/contact";
@@ -40,7 +39,6 @@ const plans = [
 export default function PlanosPage() {
   return (
     <SiteShell active="planos">
-      <PlanAnimations />
       <section className="page-hero pricing-hero">
         <div className="container page-hero-grid">
           <div><p className="eyebrow"><span /> Investimento na sua evolução</p><h1>Escolha o ritmo. O plano será sempre <em>seu.</em></h1></div>
@@ -51,7 +49,7 @@ export default function PlanosPage() {
       <section className="section container pricing-section">
         <div className="pricing-grid">
           {plans.map((plan) => (
-            <article className={`price-card plan-animated ${plan.featured ? "featured" : ""}`} key={plan.name}>
+            <article className={`price-card ${plan.featured ? "featured" : ""}`} key={plan.name}>
               {plan.badge && <span className="price-badge">{plan.badge}</span>}
               <p className="price-name">{plan.name}</p>
               <p className="price-description">{plan.descriptor}</p>
@@ -64,14 +62,14 @@ export default function PlanosPage() {
           ))}
         </div>
 
-        <article className="remote-plan plan-animated">
+        <article className="remote-plan">
           <div><p className="eyebrow dark"><span /> Atendimento online com direção</p><h2>Consultoria de treino — mensal</h2><p>Para quem precisa de direcionamento técnico, organização e acompanhamento mesmo treinando por conta própria.</p></div>
           <div className="remote-price"><span>Plano mensal</span><strong><small>R$</small>80<sup>,00</sup></strong><p>por mês</p></div>
           <ul><li><CheckIcon /> Treino personalizado com acesso ao aplicativo</li><li><CheckIcon /> Acompanhamento remoto da evolução</li><li><CheckIcon /> Suporte para ajustes e execução</li></ul>
           <a className="button button-dark" href={whatsappLink("Olá, Deivid! Vi o plano mensal de consultoria de treino no site e quero saber mais.")} target="_blank" rel="noreferrer">Solicitar plano mensal <ArrowIcon /></a>
         </article>
 
-        <article className="remote-plan plan-animated">
+        <article className="remote-plan">
           <div><p className="eyebrow dark"><span /> Melhor período para consolidar a rotina</p><h2>Consultoria de treino — trimestral</h2><p>Três meses de planejamento e acompanhamento remoto para evoluir com mais consistência.</p></div>
           <div className="remote-price"><span>Plano trimestral</span><strong><small>R$</small>189<sup>,90</sup></strong><p>por 3 meses</p></div>
           <ul><li><CheckIcon /> Treino personalizado com acesso ao aplicativo</li><li><CheckIcon /> Acompanhamento remoto da evolução</li><li><CheckIcon /> Suporte para ajustes e execução</li></ul>
