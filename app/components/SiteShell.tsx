@@ -152,21 +152,31 @@ export function SiteShell({ children, active }: { children: ReactNode; active: N
   useEffect(() => {
     if (!("serviceWorker" in navigator)) return;
 
-    let isMounted = true;
+    const expectedScope = new URL(assetPath("/"), window.location.origin).href;
+
     navigator.serviceWorker
-      .register(assetPath("/sw.js"), {
-        scope: assetPath("/"),
-        updateViaCache: "none",
-      })
-      .then((registration) => {
-        if (!isMounted) return;
-        registration.update().catch(() => undefined);
-      })
+      .getRegistrations()
+      .then((registrations) =>
+        Promise.all(
+          registrations
+            .filter((registration) => registration.scope === expectedScope)
+            .map((registration) => registration.unregister()),
+        ),
+      )
       .catch(() => undefined);
 
-    return () => {
-      isMounted = false;
-    };
+    if ("caches" in window) {
+      caches
+        .keys()
+        .then((keys) =>
+          Promise.all(
+            keys
+              .filter((key) => key.startsWith("deivid-souza-site"))
+              .map((key) => caches.delete(key)),
+          ),
+        )
+        .catch(() => undefined);
+    }
   }, []);
 
   useEffect(() => {
